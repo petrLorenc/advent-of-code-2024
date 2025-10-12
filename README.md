@@ -1,10 +1,10 @@
-# 🎄 Advent of Code 2024
+# Advent of Code 2024
 
 **🏆 First place in MSD Czech Republic internal competition for Advent of Code 2024** - Successfully solved all problems!
 
 This repository contains my solutions for the Advent of Code 2024 challenges. The code is primarily focused on functionality rather than polish, with the exception of some exercises where additional effort was invested in code quality.
 
-## 🚀 Usage
+## Usage
 
 You can test any solution using the generic tester:
 
@@ -30,13 +30,19 @@ Approach:
 ********************
 ```
 
-## 📁 Structure
+## Structure
 
 Each day's solutions are organized in numbered directories (01/, 02/, etc.), containing:
 - `input.txt` - The puzzle input
 - Solution files - Python implementations for each part of the challenge
 - Additional test inputs when available
 
-## 🎯 About Advent of Code
+## About Advent of Code
 
 [Advent of Code](https://adventofcode.com/) is an annual set of Christmas-themed programming puzzles that can be solved in any programming language. This repository showcases solutions implemented in Python.
+
+## Before commit
+
+```
+uv run ruff check 01
+```

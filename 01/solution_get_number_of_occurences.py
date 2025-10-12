@@ -1,9 +1,11 @@
 from generic_tester import GenericSolution
 
+
 class Solution(GenericSolution):
     """
     Count the number of occurrences where numbers in the first column match numbers in the second column.
     """
+
     def solution(self, input_data: str):
         input_data = input_data.splitlines()
         first_column = []

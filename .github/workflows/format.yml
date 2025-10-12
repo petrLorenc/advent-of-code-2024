@@ -1,0 +1,30 @@
+
+name: Code Formatting Check
+
+# Trigger the workflow on push and pull requests
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  format-check:
+    runs-on: ubuntu-latest 
+
+    strategy:
+      fail-fast: true # If any step fails, stop the entire job immediately
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Run Ruff Linter
+        uses: astral-sh/ruff-action@v3
+        with:
+          args: 'check --output-format=github'
