@@ -1,4 +1,3 @@
-
 from generic_tester import GenericSolution
 
 
@@ -7,10 +6,10 @@ class Solution(GenericSolution):
     Calculate the number of safe patterns in the input data. A pattern is considered safe if the differences between consecutive numbers
     are all positive and less than or equal to 3, or all negative and greater than or equal to -3.
     """
+
     def __init__(self):
         self.all = 0
         self.safe = 0
-
 
     def solution(self, input_data: str):
         for line in input_data.splitlines(keepends=False):
@@ -24,9 +23,17 @@ class Solution(GenericSolution):
             increasing = first_num < last_num
             is_safe = True
             for char in split_line[2:]:
-                if increasing and last_num < int(char) and abs(last_num - int(char)) <= 3:
+                if (
+                    increasing
+                    and last_num < int(char)
+                    and abs(last_num - int(char)) <= 3
+                ):
                     pass
-                elif not increasing and last_num > int(char) and abs(last_num - int(char)) <= 3:
+                elif (
+                    not increasing
+                    and last_num > int(char)
+                    and abs(last_num - int(char)) <= 3
+                ):
                     pass
                 else:
                     is_safe = False
@@ -34,5 +41,3 @@ class Solution(GenericSolution):
             if is_safe:
                 self.safe += 1
         return self.all, self.safe
-
-

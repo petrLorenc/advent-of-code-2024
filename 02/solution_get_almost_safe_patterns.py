@@ -1,4 +1,3 @@
-
 from generic_tester import GenericSolution
 
 
@@ -20,7 +19,6 @@ class Solution(GenericSolution):
             return True
         return False
 
-
     def solution(self, input_data: str):
         for line in input_data.splitlines(keepends=False):
             self.all += 1
@@ -34,9 +32,8 @@ class Solution(GenericSolution):
                     elif idx == len(split_line) - 1:
                         new_split_line = split_line[:-1]
                     else:
-                        new_split_line = split_line[0:idx] + split_line[idx + 1:]
+                        new_split_line = split_line[0:idx] + split_line[idx + 1 :]
                     if self.check_if_correct(new_split_line):
                         self.safe += 1
                         break
         return self.all, self.safe
-
