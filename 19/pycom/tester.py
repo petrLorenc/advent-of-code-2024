@@ -2,6 +2,7 @@
 
 import doctest
 
+
 def your_function(file: str):
     """
     Example input:
@@ -69,8 +70,10 @@ def your_function_harder(file: str):
 
     # YOUR CODE HERE
 
+
 if __name__ == "__main__":
     import time
+
     start = time.time()
     doctest.testmod()
     end = time.time()

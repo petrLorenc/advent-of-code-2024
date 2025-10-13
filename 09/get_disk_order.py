@@ -26,11 +26,14 @@ while idx_start < idx_end:
     while real_memory[idx_end] == ".":
         idx_end -= 1
     if idx_start < idx_end:
-        real_memory[idx_start], real_memory[idx_end] = real_memory[idx_end], real_memory[idx_start]
+        real_memory[idx_start], real_memory[idx_end] = (
+            real_memory[idx_end],
+            real_memory[idx_start],
+        )
 
 print(real_memory)
 
 cnt = 0
-for idx, num in enumerate(real_memory[:real_memory.index(".")]):
+for idx, num in enumerate(real_memory[: real_memory.index(".")]):
     cnt += idx * int(num)
 print(cnt)

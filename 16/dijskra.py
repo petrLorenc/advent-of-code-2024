@@ -11,9 +11,11 @@ board = [list(x.strip()) for x in input_data.strip().split("\n")]
 x_len = len(board[0])
 y_len = len(board)
 
+
 def print_board(board):
     for row in board:
         print("".join([f"{str(x):^6}" for x in row]))
+
 
 raw_graph = [[None for x in range(x_len)] for y in range(y_len)]
 raw_graph_reverse = {}
@@ -23,6 +25,7 @@ idx_ends = None
 
 import networkx as nx
 import numpy as np
+
 # importing matplotlib.pyplot
 import matplotlib.pyplot as plt
 
@@ -41,21 +44,21 @@ for y in range(y_len):
             else:
                 G.add_node(idx)
                 l = idx
-                idx = idx+1
+                idx = idx + 1
 
                 G.add_node(idx)
                 u = idx
-                idx = idx+1
+                idx = idx + 1
 
                 G.add_node(idx)
                 r = idx
                 if board[y][x] == "S":
                     idx_start = idx
-                idx = idx+1
+                idx = idx + 1
 
                 G.add_node(idx)
                 d = idx
-                idx = idx+1
+                idx = idx + 1
 
                 G.add_edge(l, u, weight=1000)
                 G.add_edge(u, l, weight=1000)
@@ -110,9 +113,12 @@ for y in range(y_len):
 print(nx.shortest_path_length(G, idx_start, idx_ends, weight="weight"))
 
 paths = list(nx.all_shortest_paths(G, idx_start, idx_ends, weight="weight"))
+
+
 def map_path_to_map(raw_graph_reverse, path):
     # [10, 9, 7, 5, 0]
     return list(set([raw_graph_reverse[idx] for idx in path]))
+
 
 points = []
 for path in paths:

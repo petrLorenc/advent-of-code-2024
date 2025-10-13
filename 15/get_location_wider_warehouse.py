@@ -19,12 +19,13 @@ def print_board(board):
     for row in board:
         print("".join([x.get_str() for x in row]))
 
+
 def sum_coordinates(board):
     cnt = 0
     for x in range(x_len):
         for y in range(y_len):
             if board[y][x].get_str() == "O":
-                cnt += (100 * y + x)
+                cnt += 100 * y + x
     return cnt
 
 
@@ -72,12 +73,15 @@ class WideMapObject:
 
     def move(self, diff_x, diff_y, board) -> bool:
         if diff_x == 0:
-            return self.l.move(diff_x, diff_y, board, sibling=self.r) and self.r.move(diff_x, diff_y, board, sibling=self.l)
+            return self.l.move(diff_x, diff_y, board, sibling=self.r) and self.r.move(
+                diff_x, diff_y, board, sibling=self.l
+            )
         elif diff_x == 1:
             return self.r.move(diff_x, diff_y, board, sibling=self.l)
         elif diff_x == -1:
             return self.l.move(diff_x, diff_y, board, sibling=self.r)
         return False
+
 
 robot: MapObject = None
 for x in range(x_len):

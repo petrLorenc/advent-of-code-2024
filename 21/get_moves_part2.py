@@ -5,31 +5,32 @@ with open("input_2.txt") as f:
 
 inputs = list(map(str.strip, inputs))
 
+
 def get_moves_for_keypad(code):
     """
-+---+---+---+
-| 7 | 8 | 9 |
-+---+---+---+
-| 4 | 5 | 6 |
-+---+---+---+
-| 1 | 2 | 3 |
-+---+---+---+
-    | 0 | A |
-    +---+---+
+    +---+---+---+
+    | 7 | 8 | 9 |
+    +---+---+---+
+    | 4 | 5 | 6 |
+    +---+---+---+
+    | 1 | 2 | 3 |
+    +---+---+---+
+        | 0 | A |
+        +---+---+
     """
     keypad_map = {
-        "7": (0,0),
-        "8": (0,1),
-        "9": (0,2),
-        "4": (1,0),
-        "5": (1,1),
-        "6": (1,2),
-        "1": (2,0),
-        "2": (2,1),
-        "3": (2,2),
-        "AVOID": (3,0),
-        "0": (3,1),
-        "A": (3,2)
+        "7": (0, 0),
+        "8": (0, 1),
+        "9": (0, 2),
+        "4": (1, 0),
+        "5": (1, 1),
+        "6": (1, 2),
+        "1": (2, 0),
+        "2": (2, 1),
+        "3": (2, 2),
+        "AVOID": (3, 0),
+        "0": (3, 1),
+        "A": (3, 2),
     }
     position = "A"
     out = ""
@@ -58,23 +59,20 @@ def get_moves_for_keypad(code):
         position = c
     return out
 
+
 from functools import cache
 
-robot_keypad_map = {
-        "^": (0, 1),
-        "A": (0, 2),
-        "<": (1, 0),
-        "v": (1, 1),
-        ">": (1, 2)
-    }
+robot_keypad_map = {"^": (0, 1), "A": (0, 2), "<": (1, 0), "v": (1, 1), ">": (1, 2)}
+
+
 @cache
 def get_moves_for_robot_keypad(init_c, final_c):
     """
-    +---+---+
-    | ^ | A |
-+---+---+---+
-| < | v | > |
-+---+---+---+
+        +---+---+
+        | ^ | A |
+    +---+---+---+
+    | < | v | > |
+    +---+---+---+
     """
     end_y, end_x = robot_keypad_map[final_c]
     start_y, start_x = robot_keypad_map[init_c]
@@ -92,7 +90,9 @@ def get_moves_for_robot_keypad(init_c, final_c):
         o = left + up + down + right + "A"
     return o
 
+
 outnum = 0
+
 
 @cache
 def get_moves_for_level(p, c, level) -> int:
@@ -100,7 +100,9 @@ def get_moves_for_level(p, c, level) -> int:
     if level == 1:
         return len(out)
     else:
-        return get_moves_for_level("A", out[0], level - 1) + sum((get_moves_for_level(p, c, level - 1) for p, c in zip(out[0:], out[1:])))
+        return get_moves_for_level("A", out[0], level - 1) + sum(
+            (get_moves_for_level(p, c, level - 1) for p, c in zip(out[0:], out[1:]))
+        )
 
 
 for input in inputs:
@@ -108,7 +110,9 @@ for input in inputs:
     first_code = get_moves_for_keypad(input)
     print(first_code)
     LEVEL = 25
-    code = get_moves_for_level("A", first_code[0], LEVEL) + sum(get_moves_for_level(p, c, LEVEL) for p, c in zip(first_code[0:], first_code[1:]))
+    code = get_moves_for_level("A", first_code[0], LEVEL) + sum(
+        get_moves_for_level(p, c, LEVEL) for p, c in zip(first_code[0:], first_code[1:])
+    )
     # print(third_code)
 
     print(int(input[:-1]), code, int(input[:-1]) * code)

@@ -5,6 +5,7 @@ options = input_data[0]
 designs = input_data[2:]
 
 import nltk
+
 grammar_str = "A -> A B | B\nB -> "
 
 for option in options.split(","):
@@ -12,8 +13,8 @@ for option in options.split(","):
         grammar_str += f"'{ch}' "
     grammar_str += "| "
 
-print(grammar_str[:-2]) # remove | at the end
-grammar = nltk.CFG.fromstring(grammar_str[:-2]) # remove | at the end
+print(grammar_str[:-2])  # remove | at the end
+grammar = nltk.CFG.fromstring(grammar_str[:-2])  # remove | at the end
 
 designs = map(str.strip, designs)
 

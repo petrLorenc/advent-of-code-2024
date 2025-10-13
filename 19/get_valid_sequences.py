@@ -15,6 +15,7 @@ for option in options.split(","):
 print(option_mapping)
 designs = map(str.strip, designs)
 
+
 # @lru_cache(maxsize=None)
 def try_pattern(design: str):
     if design == "":
@@ -22,7 +23,7 @@ def try_pattern(design: str):
     response = False
     for pattern in option_mapping.get(design[0], []):
         if design.startswith(pattern):
-            response = response or try_pattern(design[len(pattern):])
+            response = response or try_pattern(design[len(pattern) :])
         if response:
             return response
     return response

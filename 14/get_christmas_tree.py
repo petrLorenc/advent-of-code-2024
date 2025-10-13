@@ -11,31 +11,42 @@ with open("input_2.txt") as f:
 
 robots = []
 
-class Robot:
 
+class Robot:
     def __init__(self, position: tuple, velocity: tuple, limits: tuple):
         self.position = position
         self.velocity = velocity
         self.limits = limits
 
     def make_move(self):
-        self.position = ((self.position[0] + self.velocity[0]) % self.limits[0],
-                         (self.position[1] + self.velocity[1]) % self.limits[1])
+        self.position = (
+            (self.position[0] + self.velocity[0]) % self.limits[0],
+            (self.position[1] + self.velocity[1]) % self.limits[1],
+        )
 
 
 for robot in data:
     position, velocity = robot.strip().split(" ")
-    position_x, position_y = position.replace("p=","").strip().split(",")
-    velocity_x, velocity_y = velocity.replace("v=","").strip().split(",")
-    robots.append(Robot((int(position_x), int(position_y)), (int(velocity_x), int(velocity_y)), (x_len, y_len)))
+    position_x, position_y = position.replace("p=", "").strip().split(",")
+    velocity_x, velocity_y = velocity.replace("v=", "").strip().split(",")
+    robots.append(
+        Robot(
+            (int(position_x), int(position_y)),
+            (int(velocity_x), int(velocity_y)),
+            (x_len, y_len),
+        )
+    )
 
 
 import os
 
+
 def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system("cls" if os.name == "nt" else "clear")
+
 
 clear_screen()
+
 
 def print_robots_on_board(output=False):
     is_tree = False
@@ -52,7 +63,6 @@ def print_robots_on_board(output=False):
                     is_tree = True
 
     return output, is_tree
-
 
 
 print_robots_on_board()

@@ -20,6 +20,6 @@ for page in pages.split("\n"):
             if on_p not in should_be_lower:
                 valid = False
     if valid:
-        counter += int(split_page[len(split_page)//2])
+        counter += int(split_page[len(split_page) // 2])
 print(rules_mapping)
 print(counter)

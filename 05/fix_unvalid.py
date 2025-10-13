@@ -21,7 +21,10 @@ for page in pages.split("\n"):
                 if rule in fixed_page and fixed_page.index(rule) < fixed_page.index(p):
                     first = fixed_page.index(rule)
                     second = fixed_page.index(p)
-                    fixed_page[first], fixed_page[second] = fixed_page[second], fixed_page[first]
+                    fixed_page[first], fixed_page[second] = (
+                        fixed_page[second],
+                        fixed_page[first],
+                    )
                     valid = False
 
     if not valid:
@@ -29,7 +32,7 @@ for page in pages.split("\n"):
 
 
 for pages in fixed:
-    counter += int(pages[len(pages)//2])
+    counter += int(pages[len(pages) // 2])
 
 print(fixed)
 print(rules_mapping)

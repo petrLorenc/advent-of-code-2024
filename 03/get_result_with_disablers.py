@@ -30,7 +30,11 @@ with open("input.txt") as f:
         # print(do_idx, dont_idx, enabled)
         # print(actual_index, " ", min(do_idx, dont_idx), enabled)
         if enabled:
-            operations.extend(operation_find_index.findall(input_data[actual_index:min(do_idx, dont_idx)]))
+            operations.extend(
+                operation_find_index.findall(
+                    input_data[actual_index : min(do_idx, dont_idx)]
+                )
+            )
         actual_index = min(do_idx, dont_idx)
 
         if do_idx < dont_idx:
@@ -57,5 +61,5 @@ with open("input.txt") as f:
     print(operations)
     for operation in operations:
         num_a, num_b = re.findall(r"\d+", operation)
-        result += (int(num_a) * int(num_b))
+        result += int(num_a) * int(num_b)
     print(result)

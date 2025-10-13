@@ -7,9 +7,11 @@ steps = 1024
 for _ in range(memory_size):
     memory.append([0] * memory_size)
 
+
 def print_memory(memory):
     for row in memory:
         print("".join([f"{str(x):^6}" for x in row]))
+
 
 # print_memory(memory)
 
@@ -23,6 +25,7 @@ for byte in input_data[:steps]:
 cost = [[0 for x in range(memory_size)] for y in range(memory_size)]
 visited = [[0 for x in range(memory_size)] for y in range(memory_size)]
 
+
 def get_cost(memory, cost, start, end):
     queue = [start]
     while queue:
@@ -31,7 +34,11 @@ def get_cost(memory, cost, start, end):
             return cost[x][y]
         for dx, dy in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
             new_x, new_y = x + dx, y + dy
-            if 0 <= new_x < memory_size and 0 <= new_y < memory_size and memory[new_y][new_x] == 0:
+            if (
+                0 <= new_x < memory_size
+                and 0 <= new_y < memory_size
+                and memory[new_y][new_x] == 0
+            ):
                 if cost[new_y][new_x] > cost[y][x] + 1 or visited[new_y][new_x] == 0:
                     visited[new_y][new_x] = 1
                     cost[new_y][new_x] = cost[y][x] + 1
@@ -39,7 +46,8 @@ def get_cost(memory, cost, start, end):
                     # print_memory(cost)
                     # print()
 
-print(get_cost(memory, cost, (0, 0), (memory_size-1, memory_size-1)))
+
+print(get_cost(memory, cost, (0, 0), (memory_size - 1, memory_size - 1)))
 # print()
 print_memory(cost)
 #

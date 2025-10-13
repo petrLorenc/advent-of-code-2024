@@ -3,17 +3,23 @@ import copy
 with open("input.txt") as f:
     input_data = f.read()
 
-lines = [[int(x.strip()) if x.isdigit() else x for x in list(y)] for y in input_data.split("\n")]
+lines = [
+    [int(x.strip()) if x.isdigit() else x for x in list(y)]
+    for y in input_data.split("\n")
+]
 visited_board = [[0 for x in range(len(lines[0]))] for y in range(len(lines))]
 x_len = len(lines[0])
 y_len = len(lines)
 
+
 def print_board(board):
     for line in board:
         print("".join([str(x) for x in line]))
-    print("\n"*2)
+    print("\n" * 2)
+
 
 print_board(lines)
+
 
 def try_path(board, visited_board, new_y, new_x, old_value):
     new_value = board[new_y][new_x]
@@ -30,14 +36,23 @@ def try_path(board, visited_board, new_y, new_x, old_value):
     visited_board[new_y][new_x] = 1
     paths = 0
     if 0 <= new_x - 1 and visited_board[new_y][new_x - 1] == 0:
-        paths += try_path(board, copy.deepcopy(visited_board), new_y, new_x - 1, new_value)
+        paths += try_path(
+            board, copy.deepcopy(visited_board), new_y, new_x - 1, new_value
+        )
     if 0 <= new_y - 1 and visited_board[new_y - 1][new_x] == 0:
-        paths += try_path(board, copy.deepcopy(visited_board), new_y - 1, new_x, new_value)
+        paths += try_path(
+            board, copy.deepcopy(visited_board), new_y - 1, new_x, new_value
+        )
     if new_x + 1 < x_len and visited_board[new_y][new_x + 1] == 0:
-        paths += try_path(board, copy.deepcopy(visited_board), new_y, new_x + 1, new_value)
+        paths += try_path(
+            board, copy.deepcopy(visited_board), new_y, new_x + 1, new_value
+        )
     if new_y + 1 < y_len and visited_board[new_y + 1][new_x] == 0:
-        paths += try_path(board, copy.deepcopy(visited_board), new_y + 1, new_x, new_value)
+        paths += try_path(
+            board, copy.deepcopy(visited_board), new_y + 1, new_x, new_value
+        )
     return paths
+
 
 cnt = 0
 

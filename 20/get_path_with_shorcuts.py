@@ -5,6 +5,7 @@ board = [list(x.strip()) for x in input_data.strip().split("\n")]
 x_len = len(board[0])
 y_len = len(board)
 
+
 def print_board(board):
     for row in board:
         print("".join([f"{str(x):^6}" for x in row]))
@@ -16,10 +17,12 @@ def locate_item(ch):
             if board[y][x] == ch:
                 return x, y
 
+
 start_x, start_y = locate_item("S")
 stop_x, stop_y = locate_item("E")
 
 print_board(board)
+
 
 def find_shortest_path_from_to(start_x, start_y, end_x, end_y):
     cost = [[0 for x in range(x_len)] for y in range(y_len)]
@@ -37,9 +40,11 @@ def find_shortest_path_from_to(start_x, start_y, end_x, end_y):
                     queue.insert(0, (new_x, new_y))
     return None, None
 
+
 cost, steps = find_shortest_path_from_to(start_x, start_y, stop_x, stop_y)
 print(steps)
 print_board(cost)
+
 
 def get_path_from_cost(cost, start, end):
     start_y, start_x = start
@@ -48,13 +53,20 @@ def get_path_from_cost(cost, start, end):
     while (start_x, start_y) != (end_x, end_y):
         for dx, dy in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
             new_y, new_x = start_y + dy, start_x + dx
-            if 0 <= new_x < x_len and 0 <= new_y < y_len and cost[new_y][new_x] < cost[start_y][start_x] and cost[new_y][new_x] != 0:
+            if (
+                0 <= new_x < x_len
+                and 0 <= new_y < y_len
+                and cost[new_y][new_x] < cost[start_y][start_x]
+                and cost[new_y][new_x] != 0
+            ):
                 path.append((new_y, new_x))
                 start_y, start_x = new_y, new_x
                 break
     return path[::-1]
 
+
 print(path := get_path_from_cost(cost, (stop_y, stop_x), (start_y, start_x)))
+
 
 def get_shortcuts(board, cost, paths, end_y, end_x):
     shorcuts_cost = []
@@ -64,8 +76,11 @@ def get_shortcuts(board, cost, paths, end_y, end_x):
             new_y, new_x = start_y + dy, start_x + dx
             if 0 <= new_x < x_len and 0 <= new_y < y_len and cost[new_y][new_x] != 0:
                 if cost[new_y][new_x] > cost[start_y][start_x]:
-                    shorcuts_cost.append(- cost[new_y][new_x] + cost[start_y][start_x] + 2 )
+                    shorcuts_cost.append(
+                        -cost[new_y][new_x] + cost[start_y][start_x] + 2
+                    )
     return shorcuts_cost
+
 
 print(saving := list(sorted(get_shortcuts(board, cost, path, stop_y, stop_x))))
 

@@ -46,9 +46,13 @@ while idx_end >= 0:
             possible_max_size += 1
             idx_start += 1
         if possible_max_size >= size_block:
-            real_memory[possible_start:possible_start + size_block], real_memory[idx_end + 1: idx_end + size_block + 1] = real_memory[
-                                                                                                                          idx_end + 1: idx_end + size_block + 1], real_memory[
-                                                                                                                                                                  possible_start:possible_start + size_block]
+            (
+                real_memory[possible_start : possible_start + size_block],
+                real_memory[idx_end + 1 : idx_end + size_block + 1],
+            ) = (
+                real_memory[idx_end + 1 : idx_end + size_block + 1],
+                real_memory[possible_start : possible_start + size_block],
+            )
             # print(real_memory)
             break
 

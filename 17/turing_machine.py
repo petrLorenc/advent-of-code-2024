@@ -3,11 +3,11 @@ with open("input_2.txt") as f:
 
 for line in input_data:
     if "Register A: " in line:
-        A = int(line.replace("Register A: ", ""). strip())
+        A = int(line.replace("Register A: ", "").strip())
     if "Register B: " in line:
-        B = int(line.replace("Register B: ", ""). strip())
+        B = int(line.replace("Register B: ", "").strip())
     if "Register C: " in line:
-        C = int(line.replace("Register C: ", ""). strip())
+        C = int(line.replace("Register C: ", "").strip())
     if "Program: " in line:
         program = [int(x) for x in line.replace("Program: ", "").strip().split(",")]
 print(A, B, C, program)
@@ -16,6 +16,7 @@ idx_combo = 0
 idx_literal = 1
 
 out = ""
+
 
 def get_combo(operand):
     if operand <= 3:
@@ -29,8 +30,10 @@ def get_combo(operand):
     else:
         raise Exception("Invalid combo")
 
+
 def get_literal(operand):
     return operand
+
 
 while idx_combo < len(program):
     opcode = program[idx_combo]

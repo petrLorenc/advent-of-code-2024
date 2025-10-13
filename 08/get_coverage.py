@@ -7,10 +7,13 @@ y_len = len(lines)
 
 points_mapping = {}
 cnt = 0
+
+
 def print_board(board):
     for line in board:
         print("".join(line))
-    print("\n"*2)
+    print("\n" * 2)
+
 
 for x in range(x_len):
     for y in range(y_len):

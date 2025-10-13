@@ -5,6 +5,7 @@ values = {}
 operations = []
 to_determine = set()
 
+
 def apply_operation(value_a, operator, value_b):
     if operator == "AND":
         return value_a & value_b

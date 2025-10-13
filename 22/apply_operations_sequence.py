@@ -46,6 +46,7 @@ sequences_diff_str = []
 for s in sequences_diff:
     sequences_diff_str.append("".join(map(str, s)))
 
+
 def get_return_for_sequence(seq, sequences, sequences_diff_str: list[str]):
     return_value = 0
     for idx, s in enumerate(sequences_diff_str):
@@ -73,7 +74,7 @@ amounts = defaultdict(int)
 for buyer_idx, change in enumerate(sequences_diff):
     keys = set()
     for i in range(len(change) - 3):
-        key = tuple(change[i: i + 4])
+        key = tuple(change[i : i + 4])
         if key in keys:
             continue
         amounts[key] += sequences[buyer_idx][i + 4]

@@ -3,17 +3,23 @@ import copy
 with open("input.txt") as f:
     input_data = f.read()
 
-lines = [[int(x.strip()) if x.isdigit() else x for x in list(y)] for y in input_data.split("\n")]
+lines = [
+    [int(x.strip()) if x.isdigit() else x for x in list(y)]
+    for y in input_data.split("\n")
+]
 visited_board = [[0 for x in range(len(lines[0]))] for y in range(len(lines))]
 x_len = len(lines[0])
 y_len = len(lines)
 
+
 def print_board(board):
     for line in board:
         print("".join([str(x) for x in line]))
-    print("\n"*2)
+    print("\n" * 2)
+
 
 print_board(lines)
+
 
 def try_path(board, visited_board, new_y, new_x, old_value):
     new_value = board[new_y][new_x]
@@ -45,6 +51,7 @@ def try_path(board, visited_board, new_y, new_x, old_value):
             if visited_board[y][x] == 1 and board[y][x] == 9:
                 cnt += 1
     return cnt
+
 
 cnt = 0
 

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 DAY_NUM = 24
-DAY_DESC = 'Day 24: Crossed Wires'
+DAY_DESC = "Day 24: Crossed Wires"
+
 
 def calc(log, values, mode):
     bits = {}
@@ -11,7 +12,7 @@ def calc(log, values, mode):
             row = row.split(": ")
             bits[row[0]] = int(row[1])
         elif "->" in row:
-            row = row.split(' ')
+            row = row.split(" ")
             wires.append((row[0], row[1], row[2], row[4]))
 
     if mode == 1:
@@ -41,6 +42,7 @@ def calc(log, values, mode):
     else:
         swapped = []
         carry = None
+
         def returns(ta, tb, top):
             for a, op, b, dest in wires:
                 if ((a, b) == (ta, tb) or (a, b) == (tb, ta)) and op == top:
@@ -48,18 +50,18 @@ def calc(log, values, mode):
             return None
 
         count_z = sum(1 for a, op, b, dest in wires if dest.startswith("z"))
-        for i in range(count_z-1):
-            sum_1 = returns(f"x{i:02d}", f"y{i:02d}", 'XOR')
-            carry_1 = returns(f"x{i:02d}", f"y{i:02d}", 'AND')
+        for i in range(count_z - 1):
+            sum_1 = returns(f"x{i:02d}", f"y{i:02d}", "XOR")
+            carry_1 = returns(f"x{i:02d}", f"y{i:02d}", "AND")
 
             if carry is not None:
-                carry_2 = returns(carry, sum_1, 'AND')
+                carry_2 = returns(carry, sum_1, "AND")
                 if carry_2 is None:
                     carry_1, sum_1 = sum_1, carry_1
                     swapped.extend([sum_1, carry_1])
-                    carry_2 = returns(carry, sum_1, 'AND')
+                    carry_2 = returns(carry, sum_1, "AND")
 
-                sum_2 = returns(carry, sum_1, 'XOR')
+                sum_2 = returns(carry, sum_1, "XOR")
                 if sum_1 is not None and sum_1.startswith("z"):
                     sum_1, sum_2 = sum_2, sum_1
                     swapped.extend([sum_1, sum_2])
@@ -72,11 +74,15 @@ def calc(log, values, mode):
                     carry_2, sum_2 = sum_2, carry_2
                     swapped.extend([carry_2, sum_2])
 
-                new_carry = returns(carry_2, carry_1, 'OR')
+                new_carry = returns(carry_2, carry_1, "OR")
             else:
                 new_carry = None
 
-            if new_carry is not None and new_carry.startswith("z") and new_carry != f"z{count_z-1:02d}":
+            if (
+                new_carry is not None
+                and new_carry.startswith("z")
+                and new_carry != f"z{count_z - 1:02d}"
+            ):
                 new_carry, sum_2 = sum_2, new_carry
                 swapped.extend([new_carry, sum_2])
 
@@ -86,6 +92,7 @@ def calc(log, values, mode):
                 carry = carry_1
 
         return ",".join(sorted(swapped))
+
 
 def test(log):
     values = log.decode_values("""
@@ -138,16 +145,21 @@ def test(log):
         tnw OR pbm -> gnj
     """)
 
-    log.test(calc(log, values, 1), '2024')
+    log.test(calc(log, values, 1), "2024")
+
 
 def run(log, values):
     log(calc(log, values, 1))
     log(calc(log, values, 2))
 
+
 if __name__ == "__main__":
     fn = "input_2.txt"
-    if fn is None: print("Unable to find input file!\nSpecify filename on command line"); exit(1)
+    if fn is None:
+        print("Unable to find input file!\nSpecify filename on command line")
+        exit(1)
     print(f"Using '{fn}' as input file:")
-    with open(fn) as f: values = [x.strip("\r\n") for x in f.readlines()]
+    with open(fn) as f:
+        values = [x.strip("\r\n") for x in f.readlines()]
     print(f"Running day {DAY_DESC}:")
     run(print, values)

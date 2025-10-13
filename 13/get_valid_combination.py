@@ -6,6 +6,7 @@ Prize: X=8400, Y=5400
 
 Parse the input and get the valid combination of X and Y for the prize.
 """
+
 with open("input.txt") as f:
     input_data = f.read()
 
@@ -33,11 +34,11 @@ print(examples)
 
 cnt = 0
 for x1, y1, x2, y2, rx, ry in examples:
-    y = (x1 * ry - rx * y1)/ (- y1 * x2 + x1 * y2)
+    y = (x1 * ry - rx * y1) / (-y1 * x2 + x1 * y2)
     if y % 1 == 0:
         print(y)
-        x = (rx - x2*y)/x1
+        x = (rx - x2 * y) / x1
         if x % 1 == 0:
             print(x)
-            cnt += 1*y + 3*x
+            cnt += 1 * y + 3 * x
 print(cnt)

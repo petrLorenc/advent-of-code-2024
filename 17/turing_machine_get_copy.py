@@ -1,22 +1,22 @@
-
 with open("input_2.txt") as f:
     input_data = f.readlines()
 
 for line in input_data:
     if "Register A: " in line:
-        A = int(line.replace("Register A: ", ""). strip())
+        A = int(line.replace("Register A: ", "").strip())
     if "Register B: " in line:
-        B_init = int(line.replace("Register B: ", ""). strip())
+        B_init = int(line.replace("Register B: ", "").strip())
     if "Register C: " in line:
-        C_init = int(line.replace("Register C: ", ""). strip())
+        C_init = int(line.replace("Register C: ", "").strip())
     if "Program: " in line:
         program = [int(x) for x in line.replace("Program: ", "").strip().split(",")]
 to_find = ",".join([str(x) for x in program])
 
 
-
 def get_literal(operand):
     return operand
+
+
 import tqdm
 
 number = len(program)

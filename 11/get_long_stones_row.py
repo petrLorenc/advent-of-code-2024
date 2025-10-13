@@ -6,6 +6,7 @@ with open("input.txt") as f:
 initial_stones = [x.strip() for x in input_data.split(" ")]
 cache = {}
 
+
 def get_after_N_steps(stone: str, N: int, cache: dict):
     if str(stone) in cache and N in cache[str(stone)]:
         return cache[str(stone)][N]
@@ -13,12 +14,12 @@ def get_after_N_steps(stone: str, N: int, cache: dict):
         return 1
     paths = 0
     if (len(stone) % 2) == 0:
-        res = get_after_N_steps(str(int(stone[:len(stone)//2])), N - 1, cache)
-        cache.setdefault(str(int(stone[:len(stone)//2])), {}).setdefault(N - 1, res)
+        res = get_after_N_steps(str(int(stone[: len(stone) // 2])), N - 1, cache)
+        cache.setdefault(str(int(stone[: len(stone) // 2])), {}).setdefault(N - 1, res)
         paths += res
 
-        res = get_after_N_steps(str(int(stone[len(stone)//2:])), N - 1, cache)
-        cache.setdefault(str(int(stone[:len(stone)//2])), {}).setdefault(N - 1, res)
+        res = get_after_N_steps(str(int(stone[len(stone) // 2 :])), N - 1, cache)
+        cache.setdefault(str(int(stone[: len(stone) // 2])), {}).setdefault(N - 1, res)
         paths += res
     elif stone == "0":
         res = get_after_N_steps("1", N - 1, cache)
@@ -29,6 +30,7 @@ def get_after_N_steps(stone: str, N: int, cache: dict):
         cache.setdefault(str(int(stone) * 2024), {}).setdefault(N - 1, res)
         paths += res
     return paths
+
 
 N = 76
 # 3935565 31753 437818 7697 5 38 0 123
