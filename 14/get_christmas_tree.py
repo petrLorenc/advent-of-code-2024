@@ -1,4 +1,5 @@
-from time import sleep
+import os
+
 
 x_len = 101
 y_len = 103
@@ -36,9 +37,6 @@ for robot in data:
             (x_len, y_len),
         )
     )
-
-
-import os
 
 
 def clear_screen():

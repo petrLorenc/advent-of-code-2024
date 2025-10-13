@@ -17,8 +17,6 @@ def get_literal(operand):
     return operand
 
 
-import tqdm
-
 number = len(program)
 suffix = 1
 revealed_number = 0

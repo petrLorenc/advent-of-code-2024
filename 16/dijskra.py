@@ -1,5 +1,3 @@
-import random
-
 import networkx as nx
 
 G = nx.DiGraph()
@@ -23,60 +21,53 @@ idx = 0
 idx_start = None
 idx_ends = None
 
-import networkx as nx
-import numpy as np
-
-# importing matplotlib.pyplot
-import matplotlib.pyplot as plt
-
-
 for y in range(y_len):
     for x in range(x_len):
         if 0 <= x < x_len and 0 <= y < y_len and board[y][x] != "#":
             if board[y][x] == "E":
                 idx_ends = idx
                 G.add_node(idx)
-                l = idx
-                r = l
-                u = l
-                d = l
+                left = idx
+                right = left
+                up = left
+                down = left
                 idx += 1
             else:
                 G.add_node(idx)
-                l = idx
+                left = idx
                 idx = idx + 1
 
                 G.add_node(idx)
-                u = idx
+                up = idx
                 idx = idx + 1
 
                 G.add_node(idx)
-                r = idx
+                right = idx
                 if board[y][x] == "S":
                     idx_start = idx
                 idx = idx + 1
 
                 G.add_node(idx)
-                d = idx
+                down = idx
                 idx = idx + 1
 
-                G.add_edge(l, u, weight=1000)
-                G.add_edge(u, l, weight=1000)
+                G.add_edge(left, up, weight=1000)
+                G.add_edge(up, left, weight=1000)
 
-                G.add_edge(u, r, weight=1000)
-                G.add_edge(r, u, weight=1000)
+                G.add_edge(up, right, weight=1000)
+                G.add_edge(right, up, weight=1000)
 
-                G.add_edge(r, d, weight=1000)
-                G.add_edge(d, r, weight=1000)
+                G.add_edge(right, down, weight=1000)
+                G.add_edge(down, right, weight=1000)
 
-                G.add_edge(d, l, weight=1000)
-                G.add_edge(l, d, weight=1000)
+                G.add_edge(down, left, weight=1000)
+                G.add_edge(left, down, weight=1000)
 
-            raw_graph[y][x] = {"l": l, "u": u, "r": r, "d": d}
-            raw_graph_reverse[l] = (x, y)
-            raw_graph_reverse[u] = (x, y)
-            raw_graph_reverse[r] = (x, y)
-            raw_graph_reverse[d] = (x, y)
+            raw_graph[y][x] = {"l": left, "u": up, "r": right, "d": down}
+            raw_graph_reverse[left] = (x, y)
+            raw_graph_reverse[up] = (x, y)
+            raw_graph_reverse[right] = (x, y)
+            raw_graph_reverse[down] = (x, y)
             #
             # center_node = 7  # Or any other node to be in the center
             # edge_nodes = set(G) - {center_node}

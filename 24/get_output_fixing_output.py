@@ -90,6 +90,8 @@ max_z_numbers = sum(1 for x in all_nodes if x.startswith("z"))
 for i in range(max_z_numbers - 1):
     output_sum = get_result_key(f"x{i:02d}", f"y{i:02d}", "XOR")
     hidden_carry = get_result_key(f"x{i:02d}", f"y{i:02d}", "AND")
+    carry, carry_1, carry_2 = 0, 0, 0
+    sum_1, sum_2 = output_sum, output_sum
 
     if overall_carry is not None:
         carry_2 = get_result_key(carry, sum_1, "AND")

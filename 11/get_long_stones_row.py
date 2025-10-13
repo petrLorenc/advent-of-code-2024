@@ -1,5 +1,3 @@
-import copy
-
 with open("input.txt") as f:
     input_data = f.read().strip()
 

@@ -28,6 +28,6 @@ matching = 0
 
 for key in keys:
     for lock in locks:
-        if all(k + l <= 5 for k, l in zip(key, lock)):
+        if all(ke + lo <= 5 for ke, lo in zip(key, lock)):
             matching += 1
 print(matching)

@@ -1,5 +1,3 @@
-from functools import lru_cache
-
 with open("input_2.txt") as f:
     input_data = f.readlines()
 

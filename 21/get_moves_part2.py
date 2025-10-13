@@ -1,4 +1,4 @@
-from functools import lru_cache
+from functools import cache
 
 with open("input_2.txt") as f:
     inputs = f.readlines()
@@ -59,8 +59,6 @@ def get_moves_for_keypad(code):
         position = c
     return out
 
-
-from functools import cache
 
 robot_keypad_map = {"^": (0, 1), "A": (0, 2), "<": (1, 0), "v": (1, 1), ">": (1, 2)}
 

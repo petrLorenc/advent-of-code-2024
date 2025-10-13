@@ -1,10 +1,10 @@
+import nltk
+
 with open("input_2.txt") as f:
     input_data = f.readlines()
 
 options = input_data[0]
 designs = input_data[2:]
-
-import nltk
 
 grammar_str = "A -> A B | B\nB -> "
 
