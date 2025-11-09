@@ -12,7 +12,18 @@ import argparse
 import importlib
 import glob
 from abc import abstractmethod
+import multiprocessing
 import time
+
+
+def _wrapper_function(solution, input_data, queue: multiprocessing.Queue):
+    start_time = time.perf_counter()
+    # main part - actual solution call
+    result = solution.solution(input_data)
+    
+    end_time = time.perf_counter()
+    elapsed_time = end_time - start_time
+    queue.put((result, elapsed_time))
 
 
 class GenericSolution:
@@ -33,7 +44,7 @@ class GenericTester:
         )
 
     def load_inputs(self):
-        for file in glob.glob(f"{self.problem_root}/input*.txt"):
+        for file in sorted(glob.glob(f"{self.problem_root}/input*.txt")):
             with open(file, "r") as f:
                 self.inputs[file] = f.read()
 
@@ -67,12 +78,19 @@ class GenericTester:
     def solve_problem(self):
         for input_data in self.inputs.values():
             for solution in self.solutions.values():
-                start_time = time.perf_counter()
-                # main part - actual solution call
-                result = solution.solution(input_data)
-
-                end_time = time.perf_counter()
-                elapsed_time = end_time - start_time
+                print(f"Running {solution.__class__.__name__}...")
+                print(f"{input_data[:30]=}...")
+                queue = multiprocessing.Queue()
+                process = multiprocessing.Process(target=_wrapper_function, args=(solution, input_data, queue))
+                process.start()
+                process.join(timeout=30)  # 30 seconds timeout
+                if process.is_alive():
+                    process.terminate()
+                    process.join()
+                    print(f"Solution {solution.__class__.__name__} timed out.\n")
+                    continue
+                else:
+                    result, elapsed_time = queue.get()
 
                 print(
                     self.format_result(
