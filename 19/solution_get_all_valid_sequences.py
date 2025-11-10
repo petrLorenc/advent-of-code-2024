@@ -6,6 +6,9 @@ class Solution(GenericSolution):
     __name__ = "SolutionWithLRUCache"
     def solution(self, input_data: str):
         """
+        This solution uses a recursive approach with LRU caching to count the number of ways
+        each design can be formed using the given set of valid option patterns. It builds a mapping
+        of starting characters to their corresponding patterns for efficient lookup.
         """
 
         input_lines = input_data.strip().split("\n")
