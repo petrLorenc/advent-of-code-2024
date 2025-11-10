@@ -1,7 +1,9 @@
+from functools import lru_cache
 from generic_tester import GenericSolution
 
 
 class Solution(GenericSolution):
+    __name__ = "NaiveSolution"
     def solution(self, input_data: str):
         """
         This solution uses a recursive approach to check if each design can be formed
@@ -21,6 +23,7 @@ class Solution(GenericSolution):
 
         designs = map(str.strip, designs)
 
+        @lru_cache(maxsize=None)
         def try_pattern(design: str) -> bool:
             if design == "":
                 return True

@@ -77,8 +77,8 @@ class GenericTester:
 
     def solve_problem(self):
         for input_data in self.inputs.values():
-            for solution in self.solutions.values():
-                print(f"Running {solution.__class__.__name__}...")
+            for solution_name, solution in self.solutions.items():
+                print(f"Running {solution_name.split('.')[-1]}...")
                 print(f"{input_data[:30]=}...")
                 queue = multiprocessing.Queue()
                 process = multiprocessing.Process(target=_wrapper_function, args=(solution, input_data, queue))
