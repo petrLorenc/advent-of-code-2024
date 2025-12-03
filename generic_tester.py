@@ -9,21 +9,27 @@ Flow is as follows:
 """
 
 import argparse
-import importlib
 import glob
-from abc import abstractmethod
+import importlib
 import multiprocessing
 import time
+import traceback
+from abc import abstractmethod
 
 
 def _wrapper_function(solution, input_data, queue: multiprocessing.Queue):
-    start_time = time.perf_counter()
-    # main part - actual solution call
-    result = solution.solution(input_data)
-    
-    end_time = time.perf_counter()
-    elapsed_time = end_time - start_time
-    queue.put((result, elapsed_time))
+    try:
+        start_time = time.perf_counter()
+        # main part - actual solution call
+        result = solution.solution(input_data)
+
+        end_time = time.perf_counter()
+        elapsed_time = end_time - start_time
+        queue.put(("success", result, elapsed_time))
+    except Exception as e:
+        # Capture the full traceback as a string
+        tb_str = traceback.format_exc()
+        queue.put(("error", str(e), type(e).__name__, tb_str))
 
 
 class GenericSolution:
@@ -81,7 +87,9 @@ class GenericTester:
                 print(f"Running {solution_name.split('.')[-1]}...")
                 print(f"{input_data[:30]=}...")
                 queue = multiprocessing.Queue()
-                process = multiprocessing.Process(target=_wrapper_function, args=(solution, input_data, queue))
+                process = multiprocessing.Process(
+                    target=_wrapper_function, args=(solution, input_data, queue)
+                )
                 process.start()
                 process.join(timeout=30)  # 30 seconds timeout
                 if process.is_alive():
@@ -90,13 +98,24 @@ class GenericTester:
                     print(f"Solution {solution.__class__.__name__} timed out.\n")
                     continue
                 else:
-                    result, elapsed_time = queue.get()
-
-                print(
-                    self.format_result(
-                        solution, list(self.inputs.keys())[0], elapsed_time, result
-                    )
-                )
+                    if not queue.empty():
+                        status, *data = queue.get()
+                        if status == "success":
+                            result, elapsed_time = data
+                            print(
+                                self.format_result(
+                                    solution,
+                                    list(self.inputs.keys())[0],
+                                    elapsed_time,
+                                    result,
+                                )
+                            )
+                        elif status == "error":
+                            error_message, error_type, tb_str = data
+                            print(
+                                f"Solution {solution.__class__.__name__} failed with error: {error_type}.\n"
+                            )
+                            print(tb_str)
 
 
 if __name__ == "__main__":
